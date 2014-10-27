@@ -1,0 +1,79 @@
+<html>
+<head>
+  <title>Single File Fullscreen Example</title>
+  <meta name='viewport' content='initial-scale=1, maximum-scale=1, user-scalable=0, width=device-width' />
+
+  <script src="/deps/phaser-2.1.3-arcade-min.js"></script>
+</head>
+
+<body style="margin:0px; padding: 0px;">
+<div id="game"></div>
+
+<script type="text/javascript">
+var game = new Phaser.Game(800, 600, Phaser.CANVAS, 'game',
+  { preload: preload, create: create });
+
+
+function preload() {
+  game.stage.backgroundColor = '#336699';
+  game.load.image('logo', 'assets/logo.png');
+}
+
+
+function create() {
+
+  // Put a graphic in the center to demonstrate.
+  sprite = game.add.sprite(game.world.centerX, game.world.centerY, 'logo');
+  sprite.anchor.set(0.5);
+
+  /*
+   * How the following modes take affect.
+   *
+   * On a laptop (Linux, Chromium browser):
+   *   FS Scale  Reg Scale Reg Result  FS Result
+   *   On        On        Fills       Fills
+   *   On        Off       Unscaled    Fills
+   *   Off       On        Fills       Unscaled
+   *   Off       Off       Unscaled    Unscaled
+   *
+   * On a phone (Galaxy S3, Chrome browser):
+   *   FS Scale  Reg Scale N Result    FS Result
+   *   On        On        Fills       Fills
+   *   On        Off       Too big     Unscaled
+   *   Off       On        Fills       Unscaled; buggy
+   *   Off       Off       Too big     Exact fit
+   *
+   * On a laptop (Linux, Firefox browser):
+   *   FS Scale  Reg Scale Reg Result  FS Result
+   *   On        On        Fills       Exact fit
+   *   On        Off       Unscaled    Exact fit
+   *   Off       On        Fills       Exact fit
+   *   Off       Off       Unscaled    Exact fit
+   *
+   */
+  game.scale.fullScreenScaleMode = Phaser.ScaleManager.SHOW_ALL;
+  game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
+
+  // Properly centers game in windowed mode, but aligning
+  // horizontally makes it off-centered in fullscreen mode.
+  //game.scale.pageAlignHorizontally = true;
+  //game.scale.pageAlignVertically = true;
+
+  // Docs say this is necessary, but it doesn't seem to change behavior?
+  // game.scale.setScreenSize(true);
+
+  // This is necessary to scale before waiting for window changes.
+  game.scale.refresh();
+
+  game.input.onDown.add(function() {
+                          if (game.scale.isFullScreen) {
+                              game.scale.stopFullScreen();
+                            } else {
+                              game.scale.startFullScreen(false);
+                            }
+                        }, this);
+
+}
+</script>
+</body>
+</html>
