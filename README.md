@@ -1,4 +1,4 @@
-# phaser-fullscreen
+# Phaser Fullscreen
 
 A simple Phaser game example and project template for fullscreen
 support.  The intent is to demonstrate how to properly work with
