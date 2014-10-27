@@ -15,6 +15,9 @@ There are two components:
    multiple files and classes utilizing Phaser's state system, more
    suitable than the single-file as a template for a larger project.
 
+The single-file example is running and a few more comments available
+in [this blog past](http://www.rocketshipgames.com/blogs/tjkopena/2014/10/fullscreen-scaling-in-phaser/).
+
 ## License
 
 This template is released under the MIT license.  Please feel free to
